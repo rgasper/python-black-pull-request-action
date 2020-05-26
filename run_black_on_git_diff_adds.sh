@@ -17,4 +17,4 @@ list_of_edited_files=`echo -En ${github_diff} | grep -E -- "\+\+\+ " | awk '{pri
 
 line_length=`${LINE_LENGTH}:-130`
 set -x
-black --line_length ${line_length} ${list_of_edited_files}
+black --check --line_length ${line_length} ${list_of_edited_files}
