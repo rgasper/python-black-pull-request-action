@@ -18,9 +18,9 @@ echo "looking for diff at ${github_pr_url}"
 github_diff=`curl --request GET --url ${github_pr_url} --header "authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github.v3.diff"`
 diff_length=`echo ${github_diff} | wc -l`
 echo "approximate diff size: ${diff_length}"
-edited_files=`echo -En ${github_diff} | grep -E -- "\+\+\+ |\-\-\- " | awk '{print $2}' | grep -Po -- "(?<=[ab]/).+"`
+edited_files=`echo ${github_diff} | grep -E -- "\+\+\+ |\-\-\- " | awk '{print $2}' | grep -Po -- "(?<=[ab]/).+"`
 echo "diff files: \n ${edited_files}"
-python_files=`echo -En ${edited_files} | grep *.py`
+python_files=`echo ${edited_files} | grep *.py`
 echo "python files edited in this PR: ${python_files}"
 
 if [[ -z "${LINE_LENGTH}" ]]; then
