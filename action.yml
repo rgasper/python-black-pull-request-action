@@ -1,0 +1,12 @@
+# action.yml
+name: "Python Black Formatter - Only on Edited Files"
+description: "Runs python black formatter but only on files that were changed the given PR"
+branding:
+  icon: box
+  color: gray-dark
+outputs:
+  output:
+    description: "Passes if edited files pass black formatter, fails if they don't"
+runs:
+  using: "docker"
+  image: "Dockerfile"
