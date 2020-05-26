@@ -16,4 +16,5 @@ github_diff=`curl --request GET --url ${github_pr_url} --header "authorization: 
 list_of_edited_files=`echo -En ${github_diff} | grep -E -- "\+\+\+ " | awk '{print $2}' | grep -Po -- "(?<=[ab]/).+(.py$)"`
 
 line_length=`${LINE_LENGTH}:-130`
+set -x
 black --line_length ${line_length} ${list_of_edited_files}
