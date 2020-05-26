@@ -1,7 +1,8 @@
-FROM python:3
+FROM python:3-slim
 
+RUN apt update && apt -y upgrade
 RUN pip install black
 
-COPY entrypoint.sh /entrypoint.sh
+COPY run_black_on_git_diff_adds.sh /run_black_on_git_diff_adds.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/run_black_on_git_diff_adds.sh"]
