@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: rgasper/python-black-pull-request-action@master
         env:
-          GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ## Configuration
@@ -34,7 +34,6 @@ By default, runs black with all default configurations except for `--line-length
     etc...
       - uses: rgasper/python-black-pull-request-action@master
         env:
-          GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }}
-        with:
-          line-length: 1000 # please don't do this
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LINE_LENGTH: 1000 # please don't do this
 ```
