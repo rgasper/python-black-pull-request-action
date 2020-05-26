@@ -1,13 +1,13 @@
 # Readme
 
-This is a github action that will run the [black python formatter](https://github.com/psf/black) on a PR, but only on the files changed in your PR. This helps avoid situations where one runs the formatter on an old code base and gets hundreds of files with warnings and hints. Entrypoint code is inspired by the excellent [typilus](https://github.com/typilus/typilus-action/blob/master/entrypoint.py)
+This is a github action that will run the [black python formatter](https://github.com/psf/black) on a PR, but only on the files changed in your PR. This helps avoid situations where one runs the formatter on an old code base and gets hundreds of files with warnings and hints. Entrypoint code is inspired by the excellent [typilus](https://github.com/typilus/typilus-action/blob/master/entrypoint.py).
 
 ## Installation
 
 To install, create a GitHub Actions Workflow:
 
 ```yaml
-name: Black
+name: Black Check
 
 # Run action on PRs to master
 on:
