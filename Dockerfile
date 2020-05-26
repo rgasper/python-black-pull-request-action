@@ -1,7 +1,7 @@
 FROM python:3-slim
 
 RUN apt update && apt -y upgrade
-RUN apt install -y curl jq sort uniq
+RUN apt install -y curl jq
 
 RUN pip install black
 
