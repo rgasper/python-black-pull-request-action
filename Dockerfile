@@ -1,8 +1,7 @@
 FROM python:3-slim
 
 RUN apt update && apt -y upgrade
-RUN apt install curl
-RUN apt install jq
+RUN apt install -y curl jq
 
 RUN pip install black
 
