@@ -17,6 +17,7 @@ github_pr_url=`sed -e 's/^"//' -e 's/"$//' <<<"$github_pr_url"`
 echo "looking for diff at ${github_pr_url}"
 github_diff=`curl --request GET --url ${github_pr_url} --header "authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github.v3.diff"`
 diff_length=`echo ${github_diff} | wc -l`
+echo ${github_diff}
 echo "approximate diff size: ${diff_length}"
 edited_files=`echo ${github_diff} | grep -E -- "\+\+\+ |\-\-\- " | awk '{print $2}' | grep -Po -- "(?<=[ab]/).+"`
 echo "diff files: \n ${edited_files}"
