@@ -18,8 +18,10 @@ echo "looking for diff at ${github_pr_url}"
 github_diff=`curl --request GET --url ${github_pr_url} --header "authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github.v3.diff"`
 diff_length=`echo ${github_diff} | wc -l`
 echo "approximate diff size: ${diff_length}"
-list_of_edited_files=`echo -En ${github_diff} | grep -E -- "\+\+\+ |\-\-\- " | awk '{print $2}' | grep -Po -- "(?<=[ab]/).+(.py$)"`
-echo "python files edited in this PR: ${list_of_edited_files}"
+edited_files=`echo -En ${github_diff} | grep -E -- "\+\+\+ |\-\-\- " | awk '{print $2}' | grep -Po -- "(?<=[ab]/).+"`
+echo "diff files: \n ${edited_files}"
+python_files=`echo -En ${edited_files} | grep *.py`
+echo "python files edited in this PR: ${python_files}"
 
 if [[ -z "${LINE_LENGTH}" ]]; then
     line_length=130
@@ -27,4 +29,4 @@ else
     line_length="${LINE_LENGTH}"
 fi
 
-black --line-length ${line_length} --check ${list_of_edited_files}
+black --line-length ${line_length} --check ${python_files}
