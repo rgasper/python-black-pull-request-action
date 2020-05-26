@@ -15,13 +15,10 @@ github_pr_url=`jq '.pull_request.url' ${GITHUB_EVENT_PATH}`
 # github pr url sometimes has leading and trailing quotes
 github_pr_url=`sed -e 's/^"//' -e 's/"$//' <<<"$github_pr_url"`
 echo "looking for diff at ${github_pr_url}"
-set -x
-github_diff=`curl --request GET --url ${github_pr_url} --header "authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github.v3.diff"`
-set +x
-echo "the diff: \n ${github_diff}"
-diff_length=`echo ${github_diff} | wc -l`
+curl --request GET --url ${github_pr_url} --header "authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github.v3.diff" > github_diff.txt
+diff_length=`wc -l github_diff.txt`
 echo "approximate diff size: ${diff_length}"
-edited_files=`echo ${github_diff} | grep -E -- "\+\+\+ |\-\-\- " | awk '{print $2}' | grep -Po -- "(?<=[ab]/).+"`
+edited_files=`cat github_diff.txt | grep -E -- "\+\+\+ |\-\-\- " | awk '{print $2}' | grep -Po -- "(?<=[ab]/).+"`
 echo "diff files: \n ${edited_files}"
 python_files=`echo ${edited_files} | grep *.py`
 echo "python files edited in this PR: ${python_files}"
