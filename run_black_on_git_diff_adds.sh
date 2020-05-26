@@ -11,6 +11,8 @@ then
     exit 1
 fi
 
+set -x
+
 github_pr_url=`echo -En ${GITHUB_EVENT_PATH} | jq '.pull_request.url'`
 github_diff=`curl --request GET --url ${github_pr_url} --header "authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github.v3.diff"`
 list_of_edited_files=`echo -En ${github_diff} | grep -E -- "\+\+\+ " | awk '{print $2}' | grep -Po -- "(?<=[ab]/).+(.py$)"`
@@ -21,5 +23,4 @@ else
     line_length="${LINE_LENGTH}"
 fi
 
-set -x
 black --line-length ${line_length} --check ${list_of_edited_files}
